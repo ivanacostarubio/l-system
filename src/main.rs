@@ -5,17 +5,15 @@ fn apply_rules(i: String) -> String{
 
     let mut r = "".to_string();
 
-    if i == "A"{
-        r = "B-A-B".to_string();
-    }else if i == "B"{
-        r = "A+B+A".to_string();
-
+    if i == "1"{
+        r = "11".to_string();
+    }else if i == "0"{
+        r = "1[0]0".to_string();
     }else {
         r = i.to_string();
     }
 
     return r;
-
 }
 
 fn process_string(old_string: String) -> String{
@@ -47,19 +45,44 @@ fn draw_l_system(instructions: String, angle: f64, distance: f64){
 
     let mut turtle = Turtle::new();
     turtle.set_speed(25);
-    turtle.wait_for_click();
-    turtle.drawing_mut().set_center([200.0, -300.0]);
+//    turtle.wait_for_click();
+    turtle.set_pen_color("white");
+    turtle.drawing_mut().set_background_color("black");
 
+    turtle.drawing_mut().set_center([0.0, -300.0]);
+
+
+
+    let mut positions = Vec::new();
+    let mut angles = Vec::new();
 
     for cmd in instructions.chars(){
-        if cmd == 'A'{
+        if cmd == '0'{
+
             turtle.forward(distance);
-        }else if cmd == 'B'{
+ 
+
+
+        }else if cmd == '1'{
             turtle.forward(distance);
-        } else if cmd == '+'{
+
+        } else if cmd == '['{
+
+            positions.push(turtle.position());
+            angles.push(turtle.heading());
+
             turtle.left(angle);
-        } else if cmd == '-' {
+
+        } else if cmd == ']' {
+
+            let point = positions.pop().unwrap_or( [0.0, 0.0].into() );
+            let heading = angles.pop().unwrap_or(45.0);
+
+            turtle.pen_up();
+            turtle.go_to(point);
+            turtle.set_heading(heading);
             turtle.right(angle);
+            turtle.pen_down();
         }
 
     }
@@ -67,8 +90,10 @@ fn draw_l_system(instructions: String, angle: f64, distance: f64){
 
 
 fn main() {
-    let result = create_l_system(8, "A".to_string());
-    //    let r = result.clone();
-    //   println!("{}", r);
-    draw_l_system(result, 60.0, 3.0);
+    let result = create_l_system(4, "0".to_string());
+
+    //let r = result.clone();
+
+    //println!("{}", r);
+    draw_l_system(result, 45.0, 20.0);
 }
