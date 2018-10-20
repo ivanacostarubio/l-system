@@ -5,8 +5,11 @@ fn apply_rules(i: String) -> String{
 
     let mut r = "".to_string();
 
-    if i == "F"{
-        r = "F-F++F-F".to_string();
+    if i == "A"{
+        r = "B-A-B".to_string();
+    }else if i == "B"{
+        r = "A+B+A".to_string();
+
     }else {
         r = i.to_string();
     }
@@ -43,25 +46,20 @@ fn create_l_system(n: i32, axiom: String) -> String{
 fn draw_l_system(instructions: String, angle: f64, distance: f64){
 
     let mut turtle = Turtle::new();
-    turtle.set_speed(4);
+    turtle.set_speed(25);
     turtle.wait_for_click();
     turtle.drawing_mut().set_center([200.0, -300.0]);
 
-//    turtle.drawing_mut().set_center([50.0, 100.0]);
-//    turtle.forward(200.0);
-    //turtle.backward(200.0);
-
-
 
     for cmd in instructions.chars(){
-        if cmd == 'F'{
+        if cmd == 'A'{
             turtle.forward(distance);
         }else if cmd == 'B'{
-            turtle.backward(distance);
+            turtle.forward(distance);
         } else if cmd == '+'{
-            turtle.right(angle);
-        } else if cmd == '-' {
             turtle.left(angle);
+        } else if cmd == '-' {
+            turtle.right(angle);
         }
 
     }
@@ -69,21 +67,8 @@ fn draw_l_system(instructions: String, angle: f64, distance: f64){
 
 
 fn main() {
-    let result = create_l_system(8, "F".to_string());
-//    let r = result.clone();
- //   println!("{}", r);
-
-    draw_l_system(result, 60.0, 5.0);
- 
-//    draw_test();
-
-
-//    for _ in 0..4 {
-//        turtle.forward(200.0);
-//        turtle.right(90.0);
-//    }
-//
-//
-
-
+    let result = create_l_system(8, "A".to_string());
+    //    let r = result.clone();
+    //   println!("{}", r);
+    draw_l_system(result, 60.0, 3.0);
 }
