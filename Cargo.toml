@@ -1,0 +1,9 @@
+[package]
+name = "l-system"
+version = "0.1.0"
+authors = ["Ivan Acosta-Rubio <ivan@softwarecriollo.com>"]
+
+[dependencies]
+
+turtle = "^1.0.0-rc.2"
+
