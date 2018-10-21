@@ -5,10 +5,10 @@ fn apply_rules(i: String) -> String{
 
     let mut r = "".to_string();
 
-    if i == "1"{
-        r = "11".to_string();
-    }else if i == "0"{
-        r = "1[0]0".to_string();
+    if i == "A"{
+        r = "A-B--B+A++AA+B-".to_string();
+    } else if i == "B"{
+        r = "+A-BB--B-A++A+B".to_string();
     }else {
         r = i.to_string();
     }
@@ -44,45 +44,22 @@ fn create_l_system(n: i32, axiom: String) -> String{
 fn draw_l_system(instructions: String, angle: f64, distance: f64){
 
     let mut turtle = Turtle::new();
-    turtle.set_speed(25);
-//    turtle.wait_for_click();
+    turtle.set_speed(24);
+    turtle.wait_for_click();
     turtle.set_pen_color("white");
     turtle.drawing_mut().set_background_color("black");
 
-    turtle.drawing_mut().set_center([0.0, -300.0]);
-
-
-
-    let mut positions = Vec::new();
-    let mut angles = Vec::new();
+    turtle.drawing_mut().set_center([-400.0, 0.0]);
 
     for cmd in instructions.chars(){
-        if cmd == '0'{
-
+        if cmd == 'A'{
             turtle.forward(distance);
- 
-
-
-        }else if cmd == '1'{
+        }else if cmd == 'B'{
             turtle.forward(distance);
-
-        } else if cmd == '['{
-
-            positions.push(turtle.position());
-            angles.push(turtle.heading());
-
+        } else if cmd == '+'{
             turtle.left(angle);
-
-        } else if cmd == ']' {
-
-            let point = positions.pop().unwrap_or( [0.0, 0.0].into() );
-            let heading = angles.pop().unwrap_or(45.0);
-
-            turtle.pen_up();
-            turtle.go_to(point);
-            turtle.set_heading(heading);
+        } else if cmd == '-' {
             turtle.right(angle);
-            turtle.pen_down();
         }
 
     }
@@ -90,10 +67,9 @@ fn draw_l_system(instructions: String, angle: f64, distance: f64){
 
 
 fn main() {
-    let result = create_l_system(4, "0".to_string());
+    let result = create_l_system(6, "A".to_string());
 
     //let r = result.clone();
-
     //println!("{}", r);
-    draw_l_system(result, 45.0, 20.0);
+    draw_l_system(result, 60.0, 25.0);
 }
