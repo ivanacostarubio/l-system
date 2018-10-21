@@ -6,9 +6,9 @@ fn apply_rules(i: String) -> String{
     let mut r = "".to_string();
 
     if i == "A"{
-        r = "A-B--B+A++AA+B-".to_string();
+        r = "-BF+AFA+FB-".to_string();
     } else if i == "B"{
-        r = "+A-BB--B-A++A+B".to_string();
+        r = "+AF-BFB-FA+".to_string();
     }else {
         r = i.to_string();
     }
@@ -49,27 +49,28 @@ fn draw_l_system(instructions: String, angle: f64, distance: f64){
     turtle.set_pen_color("white");
     turtle.drawing_mut().set_background_color("black");
 
-    turtle.drawing_mut().set_center([-400.0, 0.0]);
+    turtle.drawing_mut().set_center([200.0, -300.0]);
 
     for cmd in instructions.chars(){
         if cmd == 'A'{
-            turtle.forward(distance);
+            //turtle.forward(distance);
         }else if cmd == 'B'{
+            //turtle.forward(distance);
+        } else if cmd == 'F'{
             turtle.forward(distance);
-        } else if cmd == '+'{
-            turtle.left(angle);
+            //turtle.left(angle);
         } else if cmd == '-' {
+            turtle.left(angle);
+        } else if cmd == '+'{
             turtle.right(angle);
         }
-
     }
 }
 
 
 fn main() {
-    let result = create_l_system(6, "A".to_string());
-
+    let result = create_l_system(6, "B".to_string());
     //let r = result.clone();
     //println!("{}", r);
-    draw_l_system(result, 60.0, 25.0);
+    draw_l_system(result, 90.0, 10.0);
 }
